@@ -35,14 +35,14 @@
         <div class="form-group my-2">
             <label>Email</label>
             <input type="text" class="form-control" id="email" name="email" [(ngModel)]="singleUser.email" required
-                minlength="8" #email="ngModel" [ngClass]="{'is-invalid': email.errors && email.touched}"
+                minlength="7" #email="ngModel" [ngClass]="{'is-invalid': email.errors && email.touched}"
                 pattern="^[A-Za-z0-9 ]+$">
             <div class="invalid-feedback" *ngIf="email.errors?.['required']">
-                Last name required
+                Email required
             </div>
             <!-- Email errors -->
             <div class="invalid-feedback" *ngIf="email.errors?.['minlength']">
-                Must be minimum 2 characters
+                Must be minimum 7
             </div>
             <div class="invalid-feedback" *ngIf="email.errors?.['pattern']">
                 Pattern does not match
