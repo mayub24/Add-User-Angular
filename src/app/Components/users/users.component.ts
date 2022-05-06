@@ -43,6 +43,7 @@ export class UsersComponent implements OnInit {
     this.allUsers.unshift(value);
     console.log(this.bruh.value);
     value.status = this.bruh.value;
+    this.form.reset();
   }
 
 }
