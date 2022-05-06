@@ -1,4 +1,4 @@
-<button (click)="enableForm = !enableForm" class="btn btn-primary">Show Form</button>
+<button (click)="enableForm = !enableForm" class="btn btn-primary">{{enableForm ? 'Hide Form' : 'Show Form'}}</button>
 
 <div class="card p-3 my-2" *ngIf="enableForm">
     <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
