@@ -1,0 +1,90 @@
+<button (click)="enableForm = !enableForm" class="btn btn-primary">Show Form</button>
+
+<div class="card p-3 my-2" *ngIf="enableForm">
+    <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
+        <div class="form-group my-2">
+            <label>First Name</label>
+            <input type="text" name="firstName" class="form-control" [(ngModel)]="singleUser.firstName"
+                [ngClass]="{'is-invalid': firstName.errors && firstName.touched}" id="firstName" #firstName="ngModel"
+                required minlength="2">
+            <div class="invalid-feedback" *ngIf="firstName.errors?.['required']">
+                First name required
+            </div>
+            <div class="invalid-feedback" *ngIf="firstName.errors?.['minlength']">
+                Must be minimum 2 characters
+            </div>
+        </div>
+
+
+        <div class="form-group my-2">
+            <label>Last Name</label>
+            <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="singleUser.lastName"
+                #lastName="ngModel" required minlength="2"
+                [ngClass]="{'is-invalid': lastName.errors && lastName.touched}">
+            <!-- invalid feedback must be nested within the form-group contrainer in order to work correctly  -->
+            <div class="invalid-feedback" *ngIf="lastName.errors?.['required']">
+                Last name required
+            </div>
+            <div class="invalid-feedback" *ngIf="lastName.errors?.['minlength']">
+                Must be minimum 2 characters
+            </div>
+        </div>
+
+        <!-- Last name errors -->
+
+        <div class="form-group my-2">
+            <label>Email</label>
+            <input type="text" class="form-control" id="email" name="email" [(ngModel)]="singleUser.email" required
+                minlength="8" #email="ngModel" [ngClass]="{'is-invalid': email.errors && email.touched}"
+                pattern="^[A-Za-z0-9 ]+$">
+            <div class="invalid-feedback" *ngIf="email.errors?.['required']">
+                Last name required
+            </div>
+            <!-- Email errors -->
+            <div class="invalid-feedback" *ngIf="email.errors?.['minlength']">
+                Must be minimum 2 characters
+            </div>
+            <div class="invalid-feedback" *ngIf="email.errors?.['pattern']">
+                Pattern does not match
+            </div>
+        </div>
+
+
+        <div class="form-group my-2">
+            <label>Status</label>
+            <select name="statusCheck" id="statusCheck" class="form-control" [(ngModel)]="singleUser.status"
+                #statusCheck="ngModel">
+                <option [ngValue]="false">False</option>
+                <option [ngValue]="true">True</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <!-- The button will be disabled as long as the form is invalid -->
+            <button [disabled]="userForm.invalid" type="submit" class="btn btn-secondary text-light w-100 my-2">Add
+                User</button>
+        </div>
+    </form>
+</div>
+
+
+<div>
+    <div *ngFor="let user of allUsers" class="card my-4">
+        <div class="card-body" [ngClass]="{'bg-light': !user.status}">
+            <h5 class="card-title d-flex align-items-center justify-content-between">
+                <p>{{user.firstName}} {{user.lastName}}</p>
+                <button class="btn btn-dark" (click)="newFunc(user)">
+                    <i [ngClass]="user.hide ? 'fa-solid fa-circle-plus' : 'fa-solid fa-circle-minus'"></i>
+                </button>
+            </h5>
+            <div *ngIf="!user.hide">
+                <h6 class="card-subtitle mb-2 text-muted"></h6>
+                <p>Email: {{user.email}}</p>
+                <p *ngIf="user.birthDate">Birthday: {{user.birthDate | date:"longDate"}}</p>
+                <button class="btn btn-medium" [ngClass]="user.status ? 'btn-success' : 'btn-danger'"
+                    [disabled]="!user.status">{{user.status ?
+                    'Online' : 'Offline'}}</button>
+            </div>
+        </div>
+    </div>
+</div>
